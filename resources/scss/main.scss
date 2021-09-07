@@ -1,0 +1,71 @@
+//variables
+$primary: #bd2c00;
+$secondary: #333333;
+$light: #e5e5e5;
+
+//overrides bootstrap
+@import "node_modules/bootstrap/scss/bootstrap";
+$theme-colors: (
+  "primary": $primary,
+);
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f7f8fa;
+}
+
+a {
+  text-decoration: none;
+}
+
+span {
+  vertical-align: middle;
+}
+
+.avatar {
+  margin: 20px auto 0;
+  width: 50%;
+  border-radius: 50%;
+}
+
+.header__components {
+  a {
+    font-weight: 700;
+  }
+}
+
+.users__components {
+  .card {
+    transition: all 0.3s;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.userDetails__components {
+  .user-profile-column {
+    height: fit-content;
+  }
+}
+
+.repository_card {
+  transition: 0.4s all;
+  &:hover {
+    box-shadow: 8px 8px 10px #bbb;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .navbar-brand {
+    font-size: small;
+  }
+}
