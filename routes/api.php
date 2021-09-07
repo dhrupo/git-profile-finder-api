@@ -4,6 +4,7 @@ use App\Http\Controllers\GithubUserController;
 use App\Models\GithubRepos;
 use App\Models\GithubUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -16,27 +17,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('get', function () {
+    return Http::get('https://api.github.com/users')->body();
+});
+
 Route::get('search/users', function () {
     $searchKey = request('q');
-    $login = GithubUsers::where('login', 'LIKE', '%' . $searchKey . '%');
-    $name = GithubUsers::where('name', 'LIKE', '%' . $searchKey . '%');
-    $searchResults = $login->union($name)->get();
-    $count = count($searchResults);
-    $result = [
-        "total_count" => $count,
-        "items" => $searchResults
-    ];
+    $result = Http::get('https://api.github.com/search/users?q=' . $searchKey)->body();
     return $result;
 });
 
 Route::get('/users/{login}', function ($login) {
-    $user = GithubUsers::where('login', $login)->first();
-    return $user;
+    $result = Http::get('https://api.github.com/users/' . $login)->body();
+    return $result;
 });
 
 Route::get('/users/{login}/repos', function ($login) {
-    $repos = GithubRepos::where('login', $login)->get();
-    return $repos;
+    $result = Http::get('https://api.github.com/users/' . $login . '/repos')->body();
+    return $result;
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
